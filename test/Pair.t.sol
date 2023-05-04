@@ -3,7 +3,7 @@ pragma solidity ^0.8.10;
 
 import "forge-std/Test.sol";
 import "../src/Factory.sol";
-import "../srcPair.sol";
+import "../src/Pair.sol";
 import "../src/libraries/UQ112x112.sol";
 import "./mocks/ERC20Mintable.sol";
 
@@ -19,12 +19,12 @@ contract PairTest is Test {
 		token0 = new ERC20Mintable("Token A", "TKNA");
 		token1 = new ERC20Mintable("Token B", "TKNB");
 
-		ZuniswapV2Factory factory = new ZuniswapV2Factory();
+		Factory factory = new Factory();
 		address pairAddress = factory.createPair(
 			address(token0),
 			address(token1)
 		);
-		pair = ZuniswapV2Pair(pairAddress);
+		pair = Pair(pairAddress);
 
 		token0.mint(10 ether, address(this));
 		token1.mint(10 ether, address(this));
@@ -507,13 +507,13 @@ contract TestUser {
 		ERC20(token0Address_).transfer(pairAddress_, amount0_);
 		ERC20(token1Address_).transfer(pairAddress_, amount1_);
 
-		ZuniswapV2Pair(pairAddress_).mint(address(this));
+		Pair(pairAddress_).mint(address(this));
 	}
 
 	function removeLiquidity(address pairAddress_) public {
 		uint256 liquidity = ERC20(pairAddress_).balanceOf(address(this));
 		ERC20(pairAddress_).transfer(pairAddress_, liquidity);
-		ZuniswapV2Pair(pairAddress_).burn(address(this));
+		Pair(pairAddress_).burn(address(this));
 	}
 }
 
@@ -535,7 +535,7 @@ contract Flashloaner {
 			expectedLoanAmount = amount1Out;
 		}
 
-		ZuniswapV2Pair(pairAddress).swap(
+		Pair(pairAddress).swap(
 			amount0Out,
 			amount1Out,
 			address(this),
@@ -543,7 +543,7 @@ contract Flashloaner {
 		);
 	}
 
-	function zuniswapV2Call(
+	function Call(
 		address sender,
 		uint256 amount0Out,
 		uint256 amount1Out,

@@ -121,17 +121,17 @@ contract LibraryTest is Test {
 
 	function testGetAmountOutZeroInputAmount() public {
 		vm.expectRevert(encodeError("InsufficientAmount()"));
-		ZuniswapV2Library.getAmountOut(0, 1 ether, 1.5 ether);
+		Library.getAmountOut(0, 1 ether, 1.5 ether);
 	}
 
 	function testGetAmountOutZeroInputReserve() public {
 		vm.expectRevert(encodeError("InsufficientLiquidity()"));
-		ZuniswapV2Library.getAmountOut(1000, 0, 1.5 ether);
+		Library.getAmountOut(1000, 0, 1.5 ether);
 	}
 
 	function testGetAmountOutZeroOutputReserve() public {
 		vm.expectRevert(encodeError("InsufficientLiquidity()"));
-		ZuniswapV2Library.getAmountOut(1000, 1 ether, 0);
+		Library.getAmountOut(1000, 1 ether, 0);
 	}
 
 	function testGetAmountsOut() public {

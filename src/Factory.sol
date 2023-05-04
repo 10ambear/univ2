@@ -15,7 +15,7 @@ contract Factory {
 		address pair,
 		uint256
 	);
-
+	// token1 - token2 - thePairAddress
 	mapping(address => mapping(address => address)) public pairs;
 	address[] public allPairs;
 
